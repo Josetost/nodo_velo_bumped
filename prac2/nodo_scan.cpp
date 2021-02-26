@@ -9,7 +9,7 @@
 class ScanGo
 {
 public:
-  BumpGo(): state_(GOING_FORWARD), pressed_(false)
+  BumpGo(): state_(GOING_FORWARD), detected_(0)
   {
     sub_ = n_.subscribe("/scan", 1, &Listener::scanCallback, this);
     pub_ = n_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 1);
@@ -17,8 +17,8 @@ public:
 
   void scanCallback(const kobuki_msgs::BumperEvent::ConstPtr& msg)
   {
-    //detected = 0
-    //if state == palante
+    detected_ = 0;
+    if (state_ == GOING_FORWARD):
       //for (int i = 0; i < sub_.)
       //leo el array de scan
       //si una > DIST
@@ -76,12 +76,12 @@ private:
   static const int GOING_BACK   = 1;
   static const int TURNING     = 2;
 
+  int state_;
+
   static const int NO_TURN  = 0;
   static const int LEFT   = 1;
   static const int CENTER     = 2;
   static const int RIGHT     = 3;
-
-  int state_;
 
   int detected_;
 
