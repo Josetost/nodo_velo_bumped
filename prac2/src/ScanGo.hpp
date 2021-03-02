@@ -19,7 +19,7 @@ class ScanGo
 
     void scanCallback(const sensor_msgs::LaserScan::ConstPtr& msg);
     void step();
-    void static manageMarker(visualization_msgs::MarkerArray a, int color);
+    void manageMarker(visualization_msgs::MarkerArray a, int color);
 
   private:
     ros::NodeHandle n_;

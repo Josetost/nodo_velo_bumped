@@ -9,7 +9,7 @@
 #define BACKING_TIME 3.0
 
 
-void static manageMarker(visualization_msgs::MarkerArray a, int color)
+void ScanGo::manageMarker(visualization_msgs::MarkerArray a, int color)
 {
   //x = d * cost
   //y = d * sint
