@@ -5,6 +5,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   roslint
+  visualization_msgs
 )
 
 catkin_package(
