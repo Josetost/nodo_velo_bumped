@@ -1,14 +1,9 @@
 #include "ros/ros.h"
 #include "ScanGo.hpp"
-#include "geometry_msgs/Twist.h"
-#include "sensor_msgs/LaserScan.h"
-#include <random>
-#include "visualization_msgs/MarkerArray.h"
-#include "visualization_msgs/Marker.h"
 
 
 #define TURNING_TIME 3.0
-#define BACKING_TIME 3.0
+#define BACKING_TIME 2.0
 
 
 void ScanGo::manageMarker(visualization_msgs::MarkerArray a, int color)
@@ -24,8 +19,8 @@ void ScanGo::manageMarker(visualization_msgs::MarkerArray a, int color)
     vect[i].id = i+1;
     vect[i].type = visualization_msgs::Marker::SPHERE;
     vect[i].action = visualization_msgs::Marker::ADD;
-    vect[i].pose.position.x = 0.1*cos(M_PI/5 - M_PI/5*i);
-    vect[i].pose.position.y = 0.1*sin(M_PI/5 - M_PI/5*i);
+    vect[i].pose.position.x = DIST_MIN*cos(M_PI/5 - M_PI/5*i);
+    vect[i].pose.position.y = DIST_MIN*sin(M_PI/5 - M_PI/5*i);
     vect[i].pose.position.z = 0.0;
     vect[i].pose.orientation.x = 0.0;
     vect[i].pose.orientation.y = 0.0;
@@ -106,7 +101,7 @@ void ScanGo::step()
       break;
 
     case GOING_BACK:
-      cmd.linear.x = -0.25;
+      cmd.linear.x = -0.1;
       cmd.angular.z = 0;
 
       if ((ros::Time::now() - press_ts_).toSec() > BACKING_TIME )
