@@ -5,6 +5,8 @@
 #include "geometry_msgs/Twist.h"
 #include "sensor_msgs/LaserScan.h"
 #include "visualization_msgs/MarkerArray.h"
+#include "visualization_msgs/Marker.h"
+
 
 class ScanGo
 {
@@ -14,7 +16,10 @@ class ScanGo
       sub_ = n_.subscribe("/scan", 1, &ScanGo::scanCallback, this);
       pub_ = n_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 1);
       pub_marker_ = n_.advertise<visualization_msgs::MarkerArray>("/LaOrejaDeVanBug", 1);
+      pub_marker2_ = n_.advertise<visualization_msgs::Marker>("/LaOrejaDeVahhnBug", 1);
+
       array_markers_.markers.resize(3);
+
     }
 
     void scanCallback(const sensor_msgs::LaserScan::ConstPtr& msg);
@@ -47,6 +52,16 @@ class ScanGo
     ros::Subscriber sub_;
     ros::Publisher pub_;
     ros::Publisher pub_marker_;
+    ros::Publisher pub_marker2_;
+
+
+    visualization_msgs::Marker marker1;
+    visualization_msgs::Marker marker2;
+    visualization_msgs::Marker marker3;
+
+
+    std::vector<visualization_msgs::Marker> vect = {marker1, marker2, marker3};
+
 };
 
 

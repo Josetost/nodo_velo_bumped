@@ -4,6 +4,8 @@
 #include "sensor_msgs/LaserScan.h"
 #include <random>
 #include "visualization_msgs/MarkerArray.h"
+#include "visualization_msgs/Marker.h"
+
 
 #define TURNING_TIME 5.0
 #define BACKING_TIME 3.0
@@ -13,37 +15,42 @@ void ScanGo::manageMarker(visualization_msgs::MarkerArray a, int color)
 {
   //x = d * cost
   //y = d * sint
+
   for (int i = 0; i < 3; i++)
   {
-    visualization_msgs::Marker marker;
-    marker.header.frame_id = "base_link";
-    marker.header.stamp = ros::Time();
-    marker.ns = "my_namespace";
-    marker.id = i;
-    marker.type = visualization_msgs::Marker::SPHERE;
-    marker.action = visualization_msgs::Marker::ADD;
-    marker.pose.position.x = 1;
-    marker.pose.position.y = 1;
-    marker.pose.position.z = 1;
-    marker.pose.orientation.x = (double)1*cos(M_PI/5 - M_PI/5*i);
-    marker.pose.orientation.y = (double)1*sin(M_PI/5 - M_PI/5*i);
-    marker.pose.orientation.z = 0.0;
-    marker.pose.orientation.w = 0.0;
-    marker.scale.x = 0.25;
-    marker.scale.y = 0.25;
-    marker.scale.z = 0.25;
-    marker.color.a = 1.0;
-    marker.color.b = 0.0;
+    vect[i].header.frame_id = "base_link";
+    vect[i].header.stamp = ros::Time();
+    vect[i].ns = "my_namespace";
+    vect[i].id = i+1;
+    vect[i].type = visualization_msgs::Marker::SPHERE;
+    vect[i].action = visualization_msgs::Marker::ADD;
+    vect[i].pose.position.x = (double)1*cos(M_PI/5 - M_PI/5*i);
+    vect[i].pose.position.y = (double)1*sin(M_PI/5 - M_PI/5*i);
+    vect[i].pose.position.z = 0.0;
+    vect[i].pose.orientation.x = 0.0;
+    vect[i].pose.orientation.y = 0.0;
+    vect[i].pose.orientation.z = 0.0;
+    vect[i].pose.orientation.w = 1.0;
+    vect[i].scale.x = 0.25;
+    vect[i].scale.y = 0.25;
+    vect[i].scale.z = 0.25;
+    vect[i].color.a = 1.0;
+    vect[i].color.b = 0.0;
+    vect[i].color.r = 0.0;
+    vect[i].color.g = 0.0;
+
     if (color != 0 && color - 1 == i)
     {
-      marker.color.r = 1.0;
-      marker.color.g = 0.0;
+      vect[i].color.r = 1.0;
+      vect[i].color.g = 0.0;
     }
     else{
-      marker.color.r = 0.0;
-      marker.color.g = 1.0;
+      vect[i].color.r = 0.0;
+      vect[i].color.g = 1.0;
     }
-    a.markers[i] = marker;
+    a.markers[i] = vect[i];
+
+    pub_marker_.publish(a);
   }
 }
 
